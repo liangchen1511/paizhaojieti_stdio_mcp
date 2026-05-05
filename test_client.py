@@ -93,10 +93,12 @@ def test_call_tool(process, request_id=3):
     print("3. 测试tools/call方法")
     print("="*60)
     
-    # 修改为你自己的测试参数
-    test_image_url = "https://markdown-doc-image-picgo.oss-cn-wuhan-lr.aliyuncs.com/anweichao_mac_m4/timu.png"
-    test_api_key = "8de9b917859142399a0dd2fd87b2155c.2kY7wKDI5f4mt6E3"
-    
+    test_image_url = os.environ.get("TEST_IMAGE_URL", "").strip()
+    test_api_key = os.environ.get("ZHIPU_API_KEY", "").strip()
+    if not test_image_url or not test_api_key:
+        print("  跳过 tools/call：请设置环境变量 TEST_IMAGE_URL（公网图链）与 ZHIPU_API_KEY")
+        return True
+
     request = {
         "jsonrpc": "2.0",
         "id": request_id,
